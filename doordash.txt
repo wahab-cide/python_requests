@@ -1,0 +1,196 @@
+You are given a cart of items and coupons. Coupons can only be applied under certain conditions. There was some easy string parsing for the coupons involved also. We want to find the subtotal before coupons, subtotal after coupons, the best coupon to apply, and the total price after applying the best coupon and applying fees.  Return this as an object. Inputs were given in forms of data models. Output is in the form of a data model they provide. You'll be using API's they give you. YOu also have to handle error case for the API's. I raised an error for one case and "gracefully" handled another, interviewer agreed that made sense. Honestly description was very long and the mini codebase was long also so cant fully remember but that was the just of the question. They hard coded values into the object constructors. You could change values to test different things. Prolly like 150 lines of code pre given to you. It was almost all data models or functions you should use. I'd just read thru the code and ensure you understand it
+
+
+coupon = { 
+  'category': 'fruit',
+  'percent_discount': 15,
+  'amount_discount': None,
+  'minimum_num_items_required': 2,
+  'minimum_amount_required': 10.00
+}
+
+coupon_amount_discount = { 'category': 'fruit',
+  'percent_discount': None,
+  'amount_discount': 10,
+  'minimum_num_items_required': 2,
+  'minimum_amount_required': 10.00
+}
+
+coupon_amount_invalid_discount_and_amount = { 'category': 'fruit',
+  'percent_discount': 15,
+  'amount_discount': 10,
+  'minimum_num_items_required': 2,
+  'minimum_amount_required': 10.00
+}
+
+coupon_amount_invalid_amount_seen = { 'category': 'fruit',
+  'percent_discount': 15,
+  'amount_discount': None,
+  'minimum_num_items_required': 3,
+  'minimum_amount_required': 10.00
+}
+
+coupon_different_category = { 'category': 'toy',
+  'percent_discount': None,
+  'amount_discount': 1,
+  'minimum_num_items_required': 1,
+  'minimum_amount_required': 10.00
+}
+
+coupon_different_category = { 'category': 'toy',
+  'percent_discount': None,
+  'amount_discount': 1,
+  'minimum_num_items_required': 1,
+  'minimum_amount_required': 10.00
+}
+
+coupon_different_category = { 'category': 'fruit',
+  'percent_discount': None,
+  'amount_discount': 20,
+  'minimum_num_items_required': 1,
+  'minimum_amount_required': 10.00
+}
+
+# Example Cart
+cart = [ {'price': 2.00, 'category': 'fruit'},
+  {'price': 20.00, 'category': 'toy'},
+  {'price': 5.00, 'category': 'clothing'},
+  {'price': 8.00, 'category': 'fruit'}
+]
+
+coupon_over_minimum_amount_required = { 'category': 'fruit',
+  'percent_discount': 15,
+  'amount_discount': None,
+  'minimum_num_items_required': 2,
+  'minimum_amount_required': 30.00
+}
+
+
+coupon_mult = [
+  { 'categories': ['clothing', 'toy'],
+    'percent_discount': None,
+    'amount_discount': 6,
+    'minimum_num_items_required': None,
+    'minimum_amount_required': None
+  },
+  { 'categories': ['fruit'],
+    'percent_discount': 15,
+    'amount_discount': None,
+    'minimum_num_items_required': 2,
+    'minimum_amount_required': 10.00
+   }
+]
+
+#returns None
+coupon_mult_invalid_categories = [
+  { 'categories': ['clothing', 'toy'],
+    'percent_discount': None,
+    'amount_discount': 6,
+    'minimum_num_items_required': None,
+    'minimum_amount_required': None
+  },
+  { 'categories': ['clothing'],
+    'percent_discount': 15,
+    'amount_discount': None,
+    'minimum_num_items_required': 2,
+    'minimum_amount_required': 10.00
+   }
+]
+#returns None
+coupon_mult_invalid_categories_2 = [
+  { 'categories': ['clothing', 'toy'],
+    'percent_discount': None,
+    'amount_discount': 6,
+    'minimum_num_items_required': None,
+    'minimum_amount_required': None
+  },
+  { 'categories': ['fruit'],
+    'percent_discount': None,
+    'amount_discount': None,
+    'minimum_num_items_required': 2,
+    'minimum_amount_required': 10.00
+   }
+]
+
+coupon_mult_invalid_categories_3 = [
+  { 'categories': ['clothing', 'toy'],
+    'percent_discount': None,
+    'amount_discount': 6,
+    'minimum_num_items_required': None,
+    'minimum_amount_required': None
+  },
+  { 'categories': ['fruit'],
+    'percent_discount': None,
+    'amount_discount': 10,
+    'minimum_num_items_required': 2,
+    'minimum_amount_required': 10.00
+   }
+]
+
+def solution(coupon, cart):
+    category_to_price = {}
+    total_price = 0
+    seen_categories = {}
+
+
+    for current_coupon in coupon:
+        if current_coupon["percent_discount"] and current_coupon["amount_discount"]:
+            return None
+        if not current_coupon["percent_discount"] and not current_coupon["amount_discount"]:
+            return None
+
+        
+
+    
+    for item in cart:
+        if item["category"] not in category_to_price:
+            #price, amount 
+            category_to_price[item["category"]] = [0,0]
+        category_to_price[item["category"]][0] += item["price"]
+        category_to_price[item["category"]][1] += 1
+
+        total_price += item["price"]
+    
+ 
+    for current_coupon in coupon:
+        
+        largest_discount_seen = 0
+        largest_discount_category = ""
+
+        for item in current_coupon["categories"]:
+            
+            if item in seen_categories:
+                return None
+            
+            seen_categories[item] = 1
+
+
+            amount_seen = category_to_price[item][1]
+            item_price = category_to_price[item][0]
+
+            current_discount = 0
+
+            if amount_seen >= current_coupon["minimum_num_items_required"] and item_price >= current_coupon["minimum_amount_required"]:
+
+                if current_coupon["percent_discount"]:
+                    percent = float(100-current_coupon["percent_discount"])/100
+
+                    current_discount = category_to_price[item][0] - category_to_price[item][0]*percent
+
+                if current_coupon["amount_discount"]:
+                    amount_to_discount = 0
+                    if current_coupon["amount_discount"]>category_to_price[item][0]:
+                        amount_to_discount = category_to_price[item][0]
+                    else:
+                        amount_to_discount = current_coupon["amount_discount"]
+
+                    current_discount = amount_to_discount
+
+                if current_discount>largest_discount_seen:
+                    largest_discount_seen = current_discount
+                    largest_discount_category = item
+
+        if largest_discount_category != "":
+            total_price -= largest_discount_seen
+
+    return total_price
