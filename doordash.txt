@@ -1,4 +1,14 @@
-You are given a cart of items and coupons. Coupons can only be applied under certain conditions. There was some easy string parsing for the coupons involved also. We want to find the subtotal before coupons, subtotal after coupons, the best coupon to apply, and the total price after applying the best coupon and applying fees.  Return this as an object. Inputs were given in forms of data models. Output is in the form of a data model they provide. You'll be using API's they give you. YOu also have to handle error case for the API's. I raised an error for one case and "gracefully" handled another, interviewer agreed that made sense. Honestly description was very long and the mini codebase was long also so cant fully remember but that was the just of the question. They hard coded values into the object constructors. You could change values to test different things. Prolly like 150 lines of code pre given to you. It was almost all data models or functions you should use. I'd just read thru the code and ensure you understand it
+You are given a cart of items and coupons. Coupons can only be applied under certain conditions. 
+There was some easy string parsing for the coupons involved also. 
+We want to find the subtotal before coupons, subtotal after coupons, 
+the best coupon to apply, and the total price after applying the best coupon and applying fees.  
+Return this as an object. Inputs were given in forms of data models. Output is in the form of a data model they provide. 
+You'll be using API's they give you. YOu also have to handle error case for the API's. 
+I raised an error for one case and "gracefully" handled another, interviewer agreed that made sense. 
+Honestly description was very long and the mini codebase was long also so cant fully remember but that was the just of the question. 
+They hard coded values into the object constructors. You could change values to test different things. 
+Prolly like 150 lines of code pre given to you. It was almost all data models or functions you should use. 
+I'd just read thru the code and ensure you understand it
 
 
 coupon = { 
